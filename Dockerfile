@@ -19,11 +19,13 @@ RUN make && make install && rm -rf * ../
 ENV PATH /usr/local/bin:$PATH:$HOME/bin
 RUN mkdir /opt/mud
 RUN git clone https://github.com/bylins/mud.git /opt/mud/ && mkdir /opt/mud/build
+#let's make it :)
 WORKDIR /opt/mud/build
-RUN cmake -DSCRIPTING=NO -DCMAKE_BUILD_TYPE=Test -DBUILD_TESTS=NO && make && make install
+RUN cmake -DCMAKE_BUILD_TYPE=Release .. && nice -n 12 cmake --build . && nice -n 12 cmake --build . --target checks && mv circle .. && iconv -c -f utf8 -t koi8-r changelog > ../changelog
 #set capability to bind port
 RUN setcap cap_net_bind_service=+ep /opt/mud/circle
 #port 4000 exposed;
 EXPOSE 4000
 #RUN MUD
+WORKDIR /opt/mud/
 ENTRYPOINT ["/opt/mud/circle"]
