@@ -17,7 +17,7 @@ WORKDIR /opt
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4.tar.gz && tar -zxvf cmake-3.15.4.tar.gz && ./cmake-3.15.4/bootstrap --prefix=/usr/local && gmake && make && make install && mkdir /opt/mud && /root/bin/git clone https://github.com/bylins/mud.git /opt/mud/ && mkdir /opt/mud/build
 #let's make it :)
 WORKDIR /opt/mud/build
-RUN cmake -DCMAKE_BUILD_TYPE=Release .. && nice -n 12 cmake --build . && nice -n 12 cmake --build . --target checks && mv circle .. && iconv -c -f utf8 -t koi8-r changelog > ../changelog
+RUN cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . && mv circle ..
 #set capability to bind port
 RUN setcap cap_net_bind_service=+ep /opt/mud/circle
 #port 4000 exposed;
