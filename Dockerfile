@@ -23,6 +23,6 @@ RUN setcap cap_net_bind_service=+ep /opt/mud/circle
 #port 4000 exposed;
 EXPOSE 4000
 #RUN MUD
-WORKDIR /opt/mud/
-CMD mv -R lib.template lib
-ENTRYPOINT ["/opt/mud/circle"]
+WORKDIR /opt/mud
+RUN mv lib.template lib
+CMD [ "./circle" ]
